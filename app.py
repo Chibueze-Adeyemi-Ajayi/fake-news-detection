@@ -36,4 +36,4 @@ while True:
     vec = fks.convertTextToVec(text)
     arr = fks.stackVector(vec)
     prediction = fks.predictTextWithKNN([arr])
-    print(prediction),
+    print(prediction)

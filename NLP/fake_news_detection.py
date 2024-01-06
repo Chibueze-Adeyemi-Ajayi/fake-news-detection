@@ -18,9 +18,9 @@ class FakeNewsDectector:
         
     def loadNews (self, bool):
         if bool:
-            return pd.read_csv(self.paths["fake"])#[0:100]
+            return pd.read_csv(self.paths["fake"])#[0:5000]
         else:
-            return pd.read_csv(self.paths["true"])#[0:100]
+            return pd.read_csv(self.paths["true"])#[0:5000]
         
     def mergeData (self, category):
         df = pd.concat(category, ignore_index=True)
