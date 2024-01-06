@@ -32,8 +32,8 @@ print(fks.analizeTextWithKNN(y_pred, y_test))
 # print(metrics)
 
 while True:
-    text = input("Input fake news text to detect: ")
-    v = fks.convertTextToVec(text)
-    arr = fks.convertTextToVec(v)
-    pr_ = fks.predictTextWithKNN(v)
-    print(pr_)
+    text = input("Type the news to classify: ")
+    vec = fks.convertTextToVec(text)
+    arr = fks.stackVector(vec)
+    prediction = fks.predictTextWithKNN([arr])
+    print(prediction),

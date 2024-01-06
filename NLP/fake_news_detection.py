@@ -13,14 +13,14 @@ class FakeNewsDectector:
     
     def __init__(self, path_dict):
         self.nlp = spacy.load("en_core_web_sm")
-        self.knn = KNeighborsClassifier(n_neighbors=10)
+        self.knn = KNeighborsClassifier(n_neighbors=5, metric="euclidean")
         self.paths = path_dict
         
     def loadNews (self, bool):
         if bool:
-            return pd.read_csv(self.paths["fake"])#[0:50]
+            return pd.read_csv(self.paths["fake"])[0:100]
         else:
-            return pd.read_csv(self.paths["true"])#[0:50]
+            return pd.read_csv(self.paths["true"])[0:100]
         
     def mergeData (self, category):
         df = pd.concat(category, ignore_index=True)
@@ -53,7 +53,7 @@ class FakeNewsDectector:
         return self.knnClf
     
     def stackVector (self, vector):
-        return np.stack(vector, axis=0)
+        return np.stack(vector)
     
     def predictTextWithKNN (self, vector):
         return self.knnClf.predict(vector)
