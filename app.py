@@ -13,14 +13,27 @@ true_csv = fks.loadNews(True)
 true_csv["type"] = 0 #fake news [label]
 
 df = fks.mergeData([fake_csv, true_csv])
+df["vector"] = df["text"].apply(lambda text: fks.convertTextToVec(text))
 
-X_train, X_test, y_train, y_test = fks.MLCategorizer(df)
+X_train, X_test, y_train, y_test = fks.MLCategorizer(df, "vector", "type")
 
-clf = fks.classifier(X_train, y_train)
-metrics = fks.analizeReport(X_test, y_test)
+X_train = fks.stackVector(X_train)
+# print(X_train)
 
-print(metrics)
+knnClf = fks.knnClassifier(X_train, y_train)
+
+X_test = fks.stackVector(X_test)
+y_pred = fks.predictTextWithKNN(X_test)
+print(fks.analizeTextWithKNN(y_pred, y_test))
+
+# clf = fks.classifier(X_train, y_train)
+# metrics = fks.analizeReport(X_test, y_test)
+
+# print(metrics)
 
 while True:
-    text = input("Input fake news subect to detect: ")
-    print(fks.predictText(text))
+    text = input("Input fake news text to detect: ")
+    v = fks.convertTextToVec(text)
+    arr = fks.convertTextToVec(v)
+    pr_ = fks.predictTextWithKNN(v)
+    print(pr_)
